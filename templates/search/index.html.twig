@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search Products | Attraction Tickets {% endblock %}
+
+{% block body %}
+
+<div class="wrapper wrapper--symfony">
+    <h1>Attraction Tickets (Symfony)</h1>
+
+    {% if form %}
+        {{ form(form) }}
+    {% endif %}
+
+    {% if results %}
+        <div class="results__container">
+
+            {% if results_meta %}
+            <div class="results__meta">
+                <small>Displaying {{ results_meta.count }} of {{ results_meta.total_count }} results</small>
+            </div>
+            {% endif %}
+            
+            <ul class="results__list">
+            {% for product in results %}
+                <li class="results__item">
+                    <div class="results__item-header">
+                        <img 
+                            class="results__item-image" 
+                            src="{{ product.img_sml }}" 
+                            alt="Image of {{ product.title }}"
+                            width="320"
+                            height="240">
+                        <h3 class="results__item-title">{{ product.title }}</h3>
+                    </div>
+                    <h4 class="results__item-destination">{{ product.dest }}</h4>
+                </li>
+            {% endfor %}
+            </ul>
+
+        </div>
+    {% elseif app.request.method == "POST" %}
+        <h3>No products found</h3>
+    {% endif %}
+</div>
+
+<div id="react-app" class="wrapper wrapper--inactive wrapper--react"></div>
+
+<div class="toggler">
+    <a href="javascript:void(0)" title="Symfony" class="toggler__link toggler__link--symfony">Symfony</a>
+    <a href="javascript:void(0)" title="React" class="toggler__link toggler__link--react toggler__link--inactive">React</a>
+</div>
+{% endblock %}
